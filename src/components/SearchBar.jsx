@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 const SearchBar = ({ 
   onSearch, 
   placeholder = "Search for products (e.g., Panadol, Aspirin, Vitamins...)",
-  showResults = true,
+  showDropdown = true,
   onClose = null,
-  initialQuery = ""
+  initialQuery = "",
+  autoSearch = false
 }) => {
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [suggestions, setSuggestions] = useState([]);
@@ -37,7 +38,7 @@ const SearchBar = ({
   ];
 
   useEffect(() => {
-    if (searchQuery.length >= 2) {
+    if (searchQuery.length >= 2 && showDropdown) {
       setIsLoading(true);
       
       // Clear previous timeout
@@ -55,6 +56,17 @@ const SearchBar = ({
         setShowSuggestions(true);
         setIsLoading(false);
       }, 2000);
+    } else if (searchQuery.length >= 2 && autoSearch) {
+      // Auto search functionality for search page
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      
+      timeoutRef.current = setTimeout(() => {
+        if (onSearch) {
+          onSearch(searchQuery);
+        }
+      }, 2000);
     } else {
       setSuggestions([]);
       setShowSuggestions(false);
@@ -66,7 +78,7 @@ const SearchBar = ({
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [searchQuery]);
+  }, [searchQuery, showDropdown, autoSearch, onSearch]);
 
   // Close suggestions when clicking outside
   useEffect(() => {
@@ -84,6 +96,12 @@ const SearchBar = ({
 
   const handleSearch = (e) => {
     e.preventDefault();
+    
+    // Clear any pending timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    
     if (searchQuery.trim()) {
       setShowSuggestions(false);
       if (onSearch) {
@@ -143,7 +161,7 @@ const SearchBar = ({
       </form>
 
       {/* Loading indicator */}
-      {isLoading && searchQuery.length >= 2 && (
+      {isLoading && searchQuery.length >= 2 && showDropdown && (
         <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-2 p-4 z-50">
           <div className="flex items-center justify-center">
             <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-teal-400"></div>
@@ -153,7 +171,7 @@ const SearchBar = ({
       )}
 
       {/* Suggestions dropdown */}
-      {showSuggestions && suggestions.length > 0 && !isLoading && (
+      {showSuggestions && suggestions.length > 0 && !isLoading && showDropdown && (
         <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-2 z-50 max-h-80 overflow-y-auto">
           {suggestions.map((product) => (
             <button
@@ -181,7 +199,7 @@ const SearchBar = ({
       )}
 
       {/* No suggestions found */}
-      {showSuggestions && suggestions.length === 0 && !isLoading && searchQuery.length >= 2 && (
+      {showSuggestions && suggestions.length === 0 && !isLoading && searchQuery.length >= 2 && showDropdown && (
         <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-2 p-4 z-50">
           <div className="text-center text-gray-600">
             <FiSearch className="w-8 h-8 mx-auto mb-2 text-gray-400" />

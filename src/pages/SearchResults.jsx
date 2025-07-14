@@ -7,6 +7,7 @@ const SearchResults = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
   
   // Get initial search query from URL params
@@ -108,13 +109,19 @@ const SearchResults = () => {
   };
 
   const handleSearchFromQuery = (query) => {
+    setIsSearching(true);
     const results = allProducts.filter(product =>
       product.name.toLowerCase().includes(query.toLowerCase()) ||
       product.category.toLowerCase().includes(query.toLowerCase())
     );
-    setSearchResults(results);
-    setHasSearched(true);
-    setSearchQuery(query);
+    
+    // Simulate search delay for better UX
+    setTimeout(() => {
+      setSearchResults(results);
+      setHasSearched(true);
+      setSearchQuery(query);
+      setIsSearching(false);
+    }, 300);
   };
 
   const handleSearch = (query) => {
@@ -214,6 +221,8 @@ const SearchResults = () => {
             onSearch={handleSearch}
             placeholder="Search for products (e.g., Panadol, Aspirin, Vitamins...)"
             initialQuery={searchQuery}
+            showDropdown={false}
+            autoSearch={true}
           />
         </div>
       </section>
@@ -221,7 +230,19 @@ const SearchResults = () => {
       {/* Search Results */}
       <section className="py-8 bg-gray-50 min-h-screen">
         <div className="max-w-6xl mx-auto px-5">
-          {!hasSearched ? (
+          {isSearching ? (
+            <div className="text-center py-20">
+              <div className="w-24 h-24 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400"></div>
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                Searching...
+              </h2>
+              <p className="text-gray-600 max-w-md mx-auto">
+                Please wait while we find products for "{searchQuery}"
+              </p>
+            </div>
+          ) : !hasSearched ? (
             <div className="text-center py-20">
               <div className="w-24 h-24 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <FiSearch className="w-12 h-12 text-teal-400" />
@@ -232,6 +253,9 @@ const SearchResults = () => {
               <p className="text-gray-600 max-w-md mx-auto">
                 Enter a product name or category in the search bar above to find what you're looking for
               </p>
+              <div className="mt-6 text-sm text-gray-500">
+                <p>💡 Tip: Start typing and results will appear automatically after 2 seconds, or press Enter to search immediately</p>
+              </div>
             </div>
           ) : searchResults.length === 0 ? (
             <div className="text-center py-20">

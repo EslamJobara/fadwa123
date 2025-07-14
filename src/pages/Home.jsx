@@ -171,7 +171,7 @@ const Home = () => {
             </h2>
             <SearchBar 
               placeholder="Search for products (e.g., Panadol, Aspirin, Vitamins...)"
-              showResults={false}
+              showDropdown={true}
               onClose={toggleSearchOverlay}
             />
           </div>
