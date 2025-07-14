@@ -8,6 +8,7 @@ const SearchResults = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+  const [lastSearchTerm, setLastSearchTerm] = useState('');
   const location = useLocation();
   
   // Get initial search query from URL params
@@ -109,7 +110,14 @@ const SearchResults = () => {
   };
 
   const handleSearchFromQuery = (query) => {
+    // تجنب البحث المتكرر لنفس النص
+    if (query === lastSearchTerm) {
+      return;
+    }
+    
     setIsSearching(true);
+    setLastSearchTerm(query);
+    
     const results = allProducts.filter(product =>
       product.name.toLowerCase().includes(query.toLowerCase()) ||
       product.category.toLowerCase().includes(query.toLowerCase())
