@@ -32,8 +32,6 @@ const SearchResults = () => {
       price: 25.50,
       originalPrice: 30.00,
       image: 'https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?auto=compress&cs=tinysrgb&w=300',
-      rating: 4.5,
-      reviews: 128,
       inStock: true,
       stockCount: 45,
       description: 'Fast-acting pain relief tablets'
@@ -45,8 +43,6 @@ const SearchResults = () => {
       price: 28.00,
       originalPrice: 32.00,
       image: 'https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?auto=compress&cs=tinysrgb&w=300',
-      rating: 4.3,
-      reviews: 89,
       inStock: true,
       stockCount: 23,
       description: 'Night-time pain relief with sleep aid'
@@ -58,8 +54,6 @@ const SearchResults = () => {
       price: 32.00,
       originalPrice: 35.00,
       image: 'https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?auto=compress&cs=tinysrgb&w=300',
-      rating: 4.7,
-      reviews: 156,
       inStock: true,
       stockCount: 67,
       description: 'Complete cold and flu relief'
@@ -71,8 +65,6 @@ const SearchResults = () => {
       price: 15.00,
       originalPrice: 18.00,
       image: 'https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?auto=compress&cs=tinysrgb&w=300',
-      rating: 4.2,
-      reviews: 203,
       inStock: true,
       stockCount: 89,
       description: 'Low-dose aspirin for daily use'
@@ -84,8 +76,6 @@ const SearchResults = () => {
       price: 45.00,
       originalPrice: 50.00,
       image: 'https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?auto=compress&cs=tinysrgb&w=300',
-      rating: 4.6,
-      reviews: 94,
       inStock: true,
       stockCount: 156,
       description: 'Essential vitamin D supplement'
@@ -97,8 +87,6 @@ const SearchResults = () => {
       price: 65.00,
       originalPrice: 70.00,
       image: 'https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?auto=compress&cs=tinysrgb&w=300',
-      rating: 4.4,
-      reviews: 167,
       inStock: false,
       stockCount: 0,
       description: 'High-quality omega-3 supplement'
@@ -326,25 +314,7 @@ const SearchResults = () => {
                       
                       <p className="text-gray-600 mb-4">
                         {product.description}
-                      </p>
-                      
-                      <div className="flex items-center mb-4">
-                        <div className="flex items-center">
-                          {[...Array(5)].map((_, i) => (
-                            <FiStar
-                              key={i}
-                              className={`w-4 h-4 ${
-                                i < Math.floor(product.rating)
-                                  ? 'text-yellow-400 fill-current'
-                                  : 'text-gray-300'
-                              }`}
-                            />
-                          ))}
-                        </div>
-                        <span className="text-sm text-gray-600 ml-2">
-                          {product.rating} ({product.reviews} reviews)
-                        </span>
-                      </div>
+                      </p>                                     
                       
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
