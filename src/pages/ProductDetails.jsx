@@ -225,25 +225,7 @@ const ProductDetails = () => {
                 </p>
               </div>
 
-              {/* Rating */}
-              <div className="flex items-center gap-4">
-                <div className="flex items-center">
-                  {[...Array(5)].map((_, i) => (
-                    <FiStar
-                      key={i}
-                      className={`w-5 h-5 ${
-                        i < Math.floor(product.rating)
-                          ? 'text-yellow-400 fill-current'
-                          : 'text-gray-300'
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className="text-gray-600">
-                  {product.rating} ({product.reviews} reviews)
-                </span>
-              </div>
-
+        
               {/* Price */}
               <div className="flex items-center gap-4">
                 <span className="text-4xl font-bold text-teal-600">
