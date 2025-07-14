@@ -46,7 +46,7 @@ const SearchBar = ({
         clearTimeout(timeoutRef.current);
       }
       
-      // Set new timeout for 2 seconds
+      // Set new timeout for 1.5 seconds
       timeoutRef.current = setTimeout(() => {
         const filteredProducts = allProducts.filter(product =>
           product.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -55,7 +55,7 @@ const SearchBar = ({
         setSuggestions(filteredProducts);
         setShowSuggestions(true);
         setIsLoading(false);
-      }, 2000);
+      }, 1500);
     } else if (searchQuery.length >= 2 && autoSearch) {
       // Auto search functionality for search page
       if (timeoutRef.current) {
@@ -66,7 +66,7 @@ const SearchBar = ({
         if (onSearch) {
           onSearch(searchQuery);
         }
-      }, 2000);
+      }, 1500);
     } else {
       setSuggestions([]);
       setShowSuggestions(false);
