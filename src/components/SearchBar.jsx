@@ -172,7 +172,7 @@ const SearchBar = ({
 
       {/* Suggestions dropdown */}
       {showSuggestions && suggestions.length > 0 && !isLoading && showDropdown && (
-        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-2 z-50 max-h-80 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-2 z-[60] max-h-80 overflow-y-auto">
           {suggestions.map((product) => (
             <button
               key={product.id}
@@ -200,7 +200,7 @@ const SearchBar = ({
 
       {/* No suggestions found */}
       {showSuggestions && suggestions.length === 0 && !isLoading && searchQuery.length >= 2 && showDropdown && (
-        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-2 p-4 z-50">
+        <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-2 p-4 z-[60]">
           <div className="text-center text-gray-600">
             <FiSearch className="w-8 h-8 mx-auto mb-2 text-gray-400" />
             <p>No suggestions found for "{searchQuery}"</p>

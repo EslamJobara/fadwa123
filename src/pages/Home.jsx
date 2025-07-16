@@ -4,87 +4,119 @@ import SearchBar from '../components/SearchBar';
 
 const Home = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [showSearchOverlay, setShowSearchOverlay] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const toggleSearchOverlay = () => {
-    setShowSearchOverlay(!showSearchOverlay);
+  const toggleSearchBar = () => {
+    setShowSearchBar(!showSearchBar);
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 bg-white shadow-lg z-50">
-        <div className="max-w-6xl mx-auto px-5">
-          <div className="flex items-center justify-between py-4">
+      <header className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-teal-400 rounded-full flex items-center justify-center">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M10 4v12M4 10h12" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-              </div>
-              <span className="text-xl font-bold text-teal-400">PharmaHub</span>
+            <div className="flex-shrink-0">
+              <a className="flex items-center text-teal-600" href="#">
+                <span className="material-icons text-3xl">monitor_heart</span>
+                <span className="ml-2 text-2xl font-bold text-gray-800">RxCure</span>
+              </a>
             </div>
             
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex gap-8">
-              <a href="#" className="text-teal-400 font-medium relative after:absolute after:bottom-[-5px] after:left-0 after:right-0 after:h-0.5 after:bg-teal-400">
+            <nav className="hidden md:flex md:space-x-8">
+              <a className="text-teal-600 border-b-2 border-teal-600 font-medium" href="#">
                 Home
               </a>
-              <a href="#" className="text-gray-600 font-medium hover:text-teal-400 transition-colors">
+              <a className="text-gray-600 hover:text-teal-600 font-medium" href="#">
+                Categories
+              </a>
+              <a className="text-gray-600 hover:text-teal-600 font-medium" href="#">
                 About Us
               </a>
-              <a href="#" className="text-gray-600 font-medium hover:text-teal-400 transition-colors">
-                Services
-              </a>
-              <a href="#" className="text-gray-600 font-medium hover:text-teal-400 transition-colors">
+              <a className="text-gray-600 hover:text-teal-600 font-medium" href="#">
                 Contact Us
               </a>
             </nav>
             
-            {/* User Icon & Mobile Menu Toggle */}
-            <div className="flex items-center gap-4">
-              <div 
-                className="p-2 rounded-full hover:bg-teal-50 cursor-pointer transition-colors"
-                onClick={toggleSearchOverlay}
+            {/* Search Bar and Actions */}
+            <div className="flex items-center space-x-4">
+              {/* Search Bar - Desktop */}
+              <div className="hidden md:flex items-center">
+                {showSearchBar ? (
+                  <div className="flex items-center animate-in slide-in-from-right duration-300">
+                    <div className="w-80">
+                      <SearchBar 
+                        placeholder="Find My Medicine"
+                        showDropdown={true}
+                        onClose={() => setShowSearchBar(false)}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={toggleSearchBar}
+                    className="text-gray-500 hover:text-teal-600 p-2 rounded-full hover:bg-teal-50 transition-all"
+                  >
+                    <FiSearch className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+              
+              {/* Mobile Search Button */}
+              <button 
+                onClick={toggleSearchBar}
+                className="md:hidden text-gray-500 hover:text-teal-600 p-2 rounded-full hover:bg-teal-50 transition-all"
               >
-                <FiSearch className="w-6 h-6 text-teal-400" />
-              </div>
-              <div className="p-2 rounded-full hover:bg-teal-50 cursor-pointer transition-colors">
-                <FiUser className="w-6 h-6 text-teal-400" />
-              </div>
+                <FiSearch className="w-5 h-5" />
+              </button>
+              
+              <a className="hidden sm:inline-block px-4 py-2 border border-transparent text-sm font-medium rounded-md text-teal-600 bg-teal-100 hover:bg-teal-200" href="#">
+                Login
+              </a>
+              <a className="hidden sm:inline-block px-4 py-2 border border-teal-600 text-sm font-medium rounded-md text-teal-600 hover:bg-teal-50" href="#">
+                Sign Up
+              </a>
               
               {/* Mobile Menu Toggle */}
               <button 
-                className="md:hidden p-2 rounded-full hover:bg-teal-50 transition-colors"
+                className="md:hidden text-gray-500 hover:text-teal-600"
                 onClick={toggleMobileMenu}
               >
-                {isMobileMenuOpen ? (
-                  <FiX className="w-6 h-6 text-teal-400" />
-                ) : (
-                  <FiMenu className="w-6 h-6 text-teal-400" />
-                )}
+                {isMobileMenuOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
               </button>
             </div>
           </div>
           
+          {/* Mobile Search Bar */}
+          {showSearchBar && (
+            <div className="md:hidden pb-4 animate-in slide-in-from-top duration-300">
+              <SearchBar 
+                placeholder="Find My Medicine"
+                showDropdown={true}
+                onClose={() => setShowSearchBar(false)}
+              />
+            </div>
+          )}
+          
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
             <div className="md:hidden bg-white border-t border-gray-100 py-4 animate-in slide-in-from-top duration-300">
-              <a href="#" className="block py-3 px-4 text-teal-400 font-medium bg-teal-50 border-l-4 border-teal-400">
+              <a href="#" className="block py-3 px-4 text-teal-600 font-medium bg-teal-50 border-l-4 border-teal-600">
                 Home
               </a>
-              <a href="#" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-400 hover:bg-teal-50 transition-all">
+              <a href="#" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-600 hover:bg-teal-50 transition-all">
+                Categories
+              </a>
+              <a href="#" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-600 hover:bg-teal-50 transition-all">
                 About Us
               </a>
-              <a href="#" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-400 hover:bg-teal-50 transition-all">
-                Services
-              </a>
-              <a href="#" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-400 hover:bg-teal-50 transition-all">
+              <a href="#" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-600 hover:bg-teal-50 transition-all">
                 Contact Us
               </a>
             </div>
@@ -92,142 +124,223 @@ const Home = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="pt-24 pb-20 bg-gradient-to-br from-teal-50 to-teal-100 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto px-5">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            {/* Hero Text */}
-            <div className="text-center md:text-left">
-              <h1 className="text-4xl md:text-6xl font-bold text-gray-800 leading-tight mb-6">
-                Your shortcut<br />for healing
-              </h1>
-              <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
-                Access quality healthcare and medications with ease. Your trusted partner in wellness and recovery.
-              </p>
-              <button 
-                onClick={() => window.location.href = '/search'}
-                className="bg-teal-400 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-teal-500 transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-xl"
-              >
-                Search for Products
-              </button>
-            </div>
-            
-            {/* Hero Visual */}
-            <div className="relative h-96 flex items-center justify-center">
-              {/* Pharmacy Building */}
-              <div className="relative">
-                {/* Main Building */}
-                <div className="w-36 h-32 bg-teal-400 rounded-xl relative shadow-2xl shadow-teal-400/30">
-                  {/* Cross Sign */}
-                  <div className="absolute top-5 left-1/2 transform -translate-x-1/2 text-white text-3xl font-bold">
-                    +
-                  </div>
-                  
-                  {/* Windows */}
-                  <div className="absolute bottom-5 left-5 right-5 grid grid-cols-2 gap-2">
-                    <div className="h-5 bg-white/30 rounded"></div>
-                    <div className="h-5 bg-white/30 rounded"></div>
-                    <div className="h-5 bg-white/30 rounded"></div>
-                    <div className="h-5 bg-white/30 rounded"></div>
-                  </div>
-                </div>
-                
-                {/* Side Building */}
-                <div className="absolute -right-8 top-5 w-16 h-24 bg-teal-500 rounded-r-xl"></div>
-                
-                {/* Person Figure */}
-                <div className="absolute -bottom-2 -left-4">
-                  <div className="w-8 h-8 bg-orange-300 rounded-full mb-1"></div>
-                  <div className="w-6 h-10 bg-blue-500 rounded ml-1"></div>
-                </div>
-                
-                {/* Medical Elements */}
-                <div className="absolute -top-8 -right-12">
-                  <div className="w-5 h-2 bg-red-500 rounded-full transform rotate-45 absolute top-5 right-8"></div>
-                  <div className="w-5 h-2 bg-yellow-500 rounded-full transform -rotate-30 absolute top-10 right-10"></div>
-                  <div className="w-4 h-4 bg-green-500 rounded absolute top-2 right-12 relative">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-4 h-1 bg-green-600 absolute"></div>
-                      <div className="w-1 h-4 bg-green-600 absolute"></div>
+      <main>
+        {/* Hero Section */}
+        <section className="relative bg-white pt-16 pb-24 sm:pt-24 sm:pb-32">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+              <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:items-center">
+                <div>
+                  <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+                    Your Shortcut to Healing
+                  </h1>
+                  <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                    Quickly find, track, and manage your medications from local pharmacies.
+                  </p>
+                  <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:mx-0 lg:text-left">
+                    <div className="relative">
+                      <SearchBar 
+                        placeholder="Find My Medicine"
+                        showDropdown={true}
+                      />
                     </div>
+                    <a 
+                      href="/search"
+                      className="mt-6 w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 md:text-lg transition-colors"
+                    >
+                      Order Now!
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+                <img 
+                  alt="Pharmacist at a counter illustration" 
+                  className="w-full" 
+                  src="https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg?auto=compress&cs=tinysrgb&w=800"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Categories Section */}
+        <section className="bg-gray-50 py-20 sm:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h2 className="text-3xl font-extrabold text-gray-900">Explore by Category</h2>
+              <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500">Find what you need with our curated categories.</p>
+            </div>
+            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {/* Chronic Medication */}
+              <div className="pt-6 bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer">
+                <div className="flow-root px-6 pb-8">
+                  <div className="-mt-6">
+                    <div>
+                      <span className="inline-flex items-center justify-center p-3 bg-teal-500 rounded-md shadow-lg">
+                        <div className="h-20 w-20 bg-teal-100 rounded-full flex items-center justify-center">
+                          <svg className="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                          </svg>
+                        </div>
+                      </span>
+                    </div>
+                    <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">Chronic Medication</h3>
+                    <p className="mt-5 text-base text-gray-500">
+                      Manage long-term health conditions with our range of chronic medications.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Cosmetics */}
+              <div className="pt-6 bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer">
+                <div className="flow-root px-6 pb-8">
+                  <div className="-mt-6">
+                    <div>
+                      <span className="inline-flex items-center justify-center p-3 bg-teal-500 rounded-md shadow-lg">
+                        <div className="h-20 w-20 bg-teal-100 rounded-full flex items-center justify-center">
+                          <svg className="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                          </svg>
+                        </div>
+                      </span>
+                    </div>
+                    <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">Cosmetics</h3>
+                    <p className="mt-5 text-base text-gray-500">
+                      Discover skincare and beauty products for your daily routine.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Vitamins & Supplements */}
+              <div className="pt-6 bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer">
+                <div className="flow-root px-6 pb-8">
+                  <div className="-mt-6">
+                    <div>
+                      <span className="inline-flex items-center justify-center p-3 bg-teal-500 rounded-md shadow-lg">
+                        <div className="h-20 w-20 bg-teal-100 rounded-full flex items-center justify-center">
+                          <svg className="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                          </svg>
+                        </div>
+                      </span>
+                    </div>
+                    <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">Vitamins & Supplements</h3>
+                    <p className="mt-5 text-base text-gray-500">
+                      Boost your wellbeing with our selection of vitamins and supplements.
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        
-        {/* Decorative Shapes */}
-        <div className="absolute top-0 right-0 w-80 h-52 bg-gradient-to-br from-teal-400 to-teal-500 rounded-3xl transform rotate-45 -translate-y-24 translate-x-40 opacity-10"></div>
-        <div className="absolute bottom-0 left-0 w-52 h-80 bg-gradient-to-br from-teal-400 to-teal-500 rounded-3xl transform -rotate-30 translate-y-40 -translate-x-24 opacity-10"></div>
-      </section>
+        </section>
 
-      {/* Search Overlay */}
-      {showSearchOverlay && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-32">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 mx-4 w-full max-w-2xl">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-              Search for Products
-            </h2>
-            <SearchBar 
-              placeholder="Search for products (e.g., Panadol, Aspirin, Vitamins...)"
-              showDropdown={true}
-              onClose={toggleSearchOverlay}
-            />
-          </div>
-        </div>
-      )}
-
-      {/* Product Categories */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-5">
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Chronic Category */}
-            <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300 cursor-pointer text-center group">
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center group-hover:bg-teal-100 transition-colors">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M16 8v16M8 16h16" stroke="#4ECDC4" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800">Chronic</h3>
+        {/* How It Works Section */}
+        <section className="bg-white py-20 sm:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="lg:text-center">
+              <h2 className="text-base text-teal-600 font-semibold tracking-wide uppercase">How It Works</h2>
+              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                A simple path to better health
+              </p>
+              <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                Getting your medication is as easy as 1, 2, 3.
+              </p>
             </div>
-            
-            {/* Cosmetics Category */}
-            <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300 cursor-pointer text-center group">
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center group-hover:bg-teal-100 transition-colors">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <path d="M12 18c0-2.5 1.5-5 4-5s4 2.5 4 5" stroke="#4ECDC4" strokeWidth="2" strokeLinecap="round"/>
-                    <circle cx="16" cy="12" r="2" fill="#4ECDC4"/>
-                  </svg>
+            <div className="mt-12">
+              <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="text-center">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-teal-600 text-white mx-auto">
+                    <FiSearch className="w-6 h-6" />
+                  </div>
+                  <div className="mt-5">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">1. Search for your product</h3>
+                    <p className="mt-2 text-base text-gray-500">
+                      Use our powerful search to find the exact medication or product you need.
+                    </p>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-teal-600 text-white mx-auto">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                  </div>
+                  <div className="mt-5">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">2. View available pharmacies</h3>
+                    <p className="mt-2 text-base text-gray-500">
+                      See a list of local pharmacies that have your item in stock, along with prices.
+                    </p>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-teal-600 text-white mx-auto">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                  </div>
+                  <div className="mt-5">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">3. Connect and acquire</h3>
+                    <p className="mt-2 text-base text-gray-500">
+                      Contact the pharmacy to reserve your item for pickup or delivery.
+                    </p>
+                  </div>
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800">Cosmetics</h3>
-            </div>
-            
-            {/* Normal Category */}
-            <div className="bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transform hover:-translate-y-3 transition-all duration-300 cursor-pointer text-center group">
-              <div className="mb-6 flex justify-center">
-                <div className="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center group-hover:bg-teal-100 transition-colors">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <rect x="12" y="12" width="8" height="8" rx="1" stroke="#4ECDC4" strokeWidth="2"/>
-                    <path d="M14 16h4" stroke="#4ECDC4" strokeWidth="1.5" strokeLinecap="round"/>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800">Normal</h3>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* Decorative Section */}
-      <section className="h-52 bg-gradient-to-br from-teal-400 to-teal-500 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-72 bg-white/10 rounded-3xl transform rotate-30 -translate-y-24 translate-x-48"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-52 bg-white/5 rounded-3xl transform -rotate-45 translate-y-24 -translate-x-32"></div>
-      </section>
+      {/* Footer */}
+      <footer className="bg-gray-800">
+        <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
+          <div className="xl:grid xl:grid-cols-3 xl:gap-8">
+            <div className="space-y-8 xl:col-span-1">
+              <a className="flex items-center text-white" href="#">
+                <span className="material-icons text-3xl">monitor_heart</span>
+                <span className="ml-2 text-2xl font-bold">RxCure</span>
+              </a>
+              <p className="text-gray-400 text-base">
+                Your trusted partner in health and wellness.
+              </p>
+            </div>
+            <div className="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
+              <div className="md:grid md:grid-cols-2 md:gap-8">
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">Solutions</h3>
+                  <ul className="mt-4 space-y-4">
+                    <li><a className="text-base text-gray-300 hover:text-white" href="#">Patients</a></li>
+                    <li><a className="text-base text-gray-300 hover:text-white" href="#">Pharmacies</a></li>
+                  </ul>
+                </div>
+                <div className="mt-12 md:mt-0">
+                  <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">Company</h3>
+                  <ul className="mt-4 space-y-4">
+                    <li><a className="text-base text-gray-300 hover:text-white" href="#">About Us</a></li>
+                    <li><a className="text-base text-gray-300 hover:text-white" href="#">Contact Us</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div className="md:grid md:grid-cols-2 md:gap-8">
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">Legal</h3>
+                  <ul className="mt-4 space-y-4">
+                    <li><a className="text-base text-gray-300 hover:text-white" href="#">Privacy Policy</a></li>
+                    <li><a className="text-base text-gray-300 hover:text-white" href="#">Terms of Service</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-12 border-t border-gray-700 pt-8">
+            <p className="text-base text-gray-400 xl:text-center">© 2024 RxCure. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
