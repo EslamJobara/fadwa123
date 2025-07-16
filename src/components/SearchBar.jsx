@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const SearchBar = ({ 
   onSearch, 
+  onInputChange,
   placeholder = "Search for products (e.g., Panadol, Aspirin, Vitamins...)",
   showDropdown = true,
   onClose = null,
@@ -114,6 +115,16 @@ const SearchBar = ({
     }
   };
 
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    
+    // Call onInputChange if provided (for clearing search)
+    if (onInputChange) {
+      onInputChange(value);
+    }
+  };
+
   const handleSuggestionClick = (productId) => {
     setShowSuggestions(false);
     navigate(`/product/${productId}`);
@@ -137,7 +148,7 @@ const SearchBar = ({
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleInputChange}
             placeholder={placeholder}
             className="w-full px-6 py-4 pr-14 text-lg border-2 border-gray-200 rounded-full focus:border-teal-400 focus:outline-none transition-colors"
           />

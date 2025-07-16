@@ -209,6 +209,16 @@ const Products = () => {
     handleSearchFromQuery(query);
   };
 
+  // Clear search when input is empty
+  const handleSearchInputChange = (query) => {
+    setSearchQuery(query);
+    
+    if (query.trim() === '') {
+      // Clear search immediately when input is empty
+      clearSearch();
+    }
+  };
+
   // Get products to display (search results or filtered products)
   const getDisplayProducts = () => {
     if (hasSearched) {
@@ -269,6 +279,7 @@ const Products = () => {
     setSearchResults([]);
     setHasSearched(false);
     setLastSearchTerm('');
+    setIsSearching(false);
     setCurrentPage(1);
   };
 
@@ -363,6 +374,7 @@ const Products = () => {
           {/* Search Bar */}
           <SearchBar 
             onSearch={handleSearch}
+            onInputChange={handleSearchInputChange}
             placeholder="Search for products (e.g., Vitamins, Cosmetics, Supplements...)"
             showDropdown={false}
             autoSearch={true}
@@ -374,7 +386,7 @@ const Products = () => {
             <div className="text-center mt-4">
               <button
                 onClick={clearSearch}
-                className="text-teal-600 hover:text-teal-700 font-medium"
+                className="px-4 py-2 text-teal-600 hover:text-teal-700 font-medium border border-teal-600 rounded-lg hover:bg-teal-50 transition-colors"
               >
                 Clear search and view all products
               </button>
