@@ -33,8 +33,11 @@ const Home = () => {
               <a className="text-teal-600 border-b-2 border-teal-600 font-medium" href="#">
                 Home
               </a>
-              <a className="text-gray-600 hover:text-teal-600 font-medium" href="#">
-                Categories
+              <a className="text-gray-600 hover:text-teal-600 font-medium" href="/products">
+                Products
+              </a>
+              <a className="text-gray-600 hover:text-teal-600 font-medium" href="/search">
+                Search
               </a>
               <a className="text-gray-600 hover:text-teal-600 font-medium" href="#">
                 About Us
@@ -110,8 +113,11 @@ const Home = () => {
               <a href="#" className="block py-3 px-4 text-teal-600 font-medium bg-teal-50 border-l-4 border-teal-600">
                 Home
               </a>
-              <a href="#" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-600 hover:bg-teal-50 transition-all">
-                Categories
+              <a href="/products" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-600 hover:bg-teal-50 transition-all">
+                Products
+              </a>
+              <a href="/search" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-600 hover:bg-teal-50 transition-all">
+                Search
               </a>
               <a href="#" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-600 hover:bg-teal-50 transition-all">
                 About Us
