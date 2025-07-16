@@ -36,9 +36,6 @@ const Home = () => {
               <a className="text-gray-600 hover:text-teal-600 font-medium" href="/products">
                 Products
               </a>
-              <a className="text-gray-600 hover:text-teal-600 font-medium" href="/search">
-                Search
-              </a>
               <a className="text-gray-600 hover:text-teal-600 font-medium" href="#">
                 About Us
               </a>
@@ -116,9 +113,6 @@ const Home = () => {
               <a href="/products" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-600 hover:bg-teal-50 transition-all">
                 Products
               </a>
-              <a href="/search" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-600 hover:bg-teal-50 transition-all">
-                Search
-              </a>
               <a href="#" className="block py-3 px-4 text-gray-600 font-medium hover:text-teal-600 hover:bg-teal-50 transition-all">
                 About Us
               </a>
@@ -151,7 +145,7 @@ const Home = () => {
                       />
                     </div>
                     <a 
-                      href="/search"
+                      href="/products"
                       className="mt-6 w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 md:text-lg transition-colors"
                     >
                       Order Now!
